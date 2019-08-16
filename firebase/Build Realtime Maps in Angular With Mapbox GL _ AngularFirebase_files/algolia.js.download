@@ -1,0 +1,6 @@
+function initSearch(){var search=instantsearch({appId:"7RUSYTII5R",apiKey:"16b71715b79d26be48567234bc2c42dd",indexName:"lessons",searchFunction:function(helper){var searchResults=document.getElementById("hits");if(helper.state.query===""){searchResults.style.display="none";return;}
+helper.search();searchResults.style.display="block";}});search.addWidget(instantsearch.widgets.searchBox({container:"#search-input",placeholder:"search lessons"}));search.addWidget(instantsearch.widgets.hits({container:"#hits",hitsPerPage:10,templates:{item:document.getElementById("hit-template").innerHTML,empty:document.getElementById("nohits-template").innerHTML}}));search.start();let btns=document.querySelectorAll(".search-link");let close=document.getElementById("search-close");let wrapper=document.getElementById("search-wrapper");function showSearch(){wrapper.classList.add("show-search");}
+function hideSearch(){wrapper.classList.remove("show-search");}
+btns.forEach((v,i)=>{v.onclick=showSearch;})
+close.onclick=hideSearch;}
+document.addEventListener("DOMContentLoaded",function(){initSearch();});

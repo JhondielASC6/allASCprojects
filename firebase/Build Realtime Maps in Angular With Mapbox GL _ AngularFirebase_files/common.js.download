@@ -1,0 +1,53 @@
+(function(){document.addEventListener('DOMContentLoaded',function(){initMobileMenu()
+doProStuff()})
+function initMobileMenu(){var mobileBar=document.getElementById('mobile-bar')
+var sidebar=document.querySelector('.sidebar')
+var menuButton=mobileBar.querySelector('.menu-button')
+menuButton.addEventListener('click',function(){sidebar.classList.toggle('open')})
+document.body.addEventListener('click',function(e){if(e.target!==menuButton&&!sidebar.contains(e.target)){sidebar.classList.remove('open')}})
+var start={},end={}
+document.body.addEventListener('touchstart',function(e){start.x=e.changedTouches[0].clientX
+start.y=e.changedTouches[0].clientY})
+document.body.addEventListener('touchend',function(e){end.y=e.changedTouches[0].clientY
+end.x=e.changedTouches[0].clientX
+var xDiff=end.x-start.x
+var yDiff=end.y-start.y
+if(Math.abs(xDiff)>Math.abs(yDiff)){if(xDiff>0&&start.x<=80)sidebar.classList.add('open')
+else sidebar.classList.remove('open')}})}
+function doProStuff(){var tpmState=document.querySelector('.pro-member');var pro=document.querySelector('.pro-only');var anchor=document.querySelector('.pro-anchor');var pro2=document.querySelector('.pro-only2');var anchor2=document.querySelector('.pro-anchor2');var vid=document.querySelector('.pro-video');var vidAnchor=document.querySelector('.video-anchor');var basic=document.querySelector('.pro-basic');var basicAnchor=document.querySelector('.basic-anchor');var proNavs=document.querySelectorAll('.proNav')
+var makeBtn=function(){var btn=document.createElement('div');btn.innerHTML=`<div class="locked-snippet">
+                            <p class="locked-text">
+                            This code <i class="fa fa-code"></i> snippet is only available to pro members. Upgrade for  
+                            <ul>
+                              <li><strong>Unlimited access to lesson content</strong></li>
+                              <li><strong>Project consulting via Slack</strong></li>
+                              <li><strong>Free copy of The Angular Firebase Survival Guide book</strong></li>
+      
+                            </ul>
+      
+                            </p>
+                            <a class="pro-button" href="#" onclick="getTPMeter().showOffer();return false;">
+                              <i class="fa fa-key"></i> Subscribe & Unlock
+                            </a>
+                            <a href="/pro">Learn More</a>
+                        </div>`;return btn;}
+var vidImg=document.createElement('div');var vidCover=document.head.querySelector("[property='og:image']").content
+vidImg.innerHTML=`<div href="/pro" onclick="getTPMeter().showOffer();return false;">
+                              <img src="${vidCover}"></a>
+                            <a class="pro-button" href="/pro" style="display: block;">
+                            <i class="fa fa-tv"></i> Subscribe to Watch Video
+                            </a>`;var proUpdates=function(){proNavs.forEach((v,i)=>{v.innerHTML='<a href="/dashboard" class="nav-link"><strong>PRO Extras</strong></a>'})
+if(pro){anchor.style.display='none';pro.style.display='block';}
+if(pro2){anchor2.style.display='none';pro2.style.display='block';}
+if(vid){vidAnchor.style.display='none';vid.style.display='block';}
+if(basic){basicAnchor.style.display='none';basic.style.display='block';}}
+var applyCodes=function(){var stripeEl=document.querySelector('#stripeCode');if(stripeEl){stripeEl.innerHTML="<strong>STRIPE_PROACCESS</strong>";}
+var funEl=document.querySelector('#functionsCode');if(funEl){funEl.innerHTML="<strong>FUN-PRO</strong>";}
+var ionicEl=document.querySelector('#ionicCode');if(ionicEl){ionicEl.innerHTML="<strong>IONIC_PRO_ACCESS</strong>";}
+var ion4el=document.querySelector('#ionBetaCode');if(ion4el){ion4el.innerHTML="<strong>ION4BETA-PROACCESS</strong>";}
+var swagEl=document.querySelector('#swagCode');if(swagEl){swagEl.innerHTML="<strong>afbswag-15off</strong>";}
+var stickerEl=document.querySelector('#stickerForm')
+if(stickerEl){stickerEl.href='https://docs.google.com/forms/d/e/1FAIpQLSfTTRa2q9Ju4eh-OnyXRGSHuaa4H1T74jGg1ATmogqOEMq1LQ/viewform?usp=sf_link'}
+var memberCoupon=document.querySelector('#memberCoupon');if(memberCoupon){memberCoupon.innerHTML="<strong>pTWV1Sou</strong>";}
+var lifeCoupon=document.querySelector('#lifeCoupon');if(lifeCoupon){lifeCoupon.innerHTML="<strong>6lVkJIrD</strong>";}}
+if(anchor){anchor.appendChild(makeBtn())};if(anchor2){anchor2.appendChild(makeBtn())};if(vidAnchor){vidAnchor.appendChild(vidImg)};var config={attributes:true};var observer=new MutationObserver(function(mutations){mutations.forEach(function(mutation){if(mutation.target.className.includes('tpmHasAccess')){proUpdates();applyCodes();observer.disconnect();}});});observer.observe(tpmState,config);}})()

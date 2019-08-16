@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-59099331-14"></script>
+<script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-59099331-14');
+        </script>
+<title>Build Realtime Maps in Angular With Mapbox GL | AngularFirebase</title>
+<meta charset="utf-8">
+<meta name="description" content="The basics of building realtime map features with Angular4, Firebase, and MapBox">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Build Realtime Maps in Angular With Mapbox GL">
+<meta property="og:description" content="The basics of building realtime map features with Angular4, Firebase, and MapBox">
+<meta property="og:image" content="https://angularfirebase.com/images/thumbs/mapbox-09.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Build Realtime Maps in Angular With Mapbox GL">
+<meta name="twitter:description" content="The basics of building realtime map features with Angular4, Firebase, and MapBox">
+<meta name="twitter:image" content="https://angularfirebase.com/images/thumbs/mapbox-09.png">
+<link rel="apple-touch-icon" sizes="512x512" href="/images/icons/icon-512.png.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/images/icons/icon-512.png">
+<meta name="msapplication-TileImage" content="/images/icons/icon-512.png">
+<link rel="icon" href="/images/logo.png" type="image/png">
+<meta name="msapplication-TileColor" content="#f16624">
+<meta name="theme-color" content="#f16624">
+<meta name="msapplication-config" content="browserconfig.xml">
+<link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="https://use.typekit.net/jnq3uxd.css">
+<link href="https://fonts.googleapis.com/css?family=Palanquin:400,700" rel="stylesheet">
+
+<script defer="defer" src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"></script>
+
+<link rel="icon" href="/images/icons/icon-512.png">
+
+<script type="text/javascript">
+            window._tpm = window._tpm || [];
+            window._tpm['paywallID'] = '10558307';
+            window._tpm['trackPageview'] = true;
+        </script>
+<script type="text/javascript" src="//cdn.tinypass.com/tpl/d1/tpm.js"></script>
+
+<link rel="stylesheet" href="/css/page.css?ver=28">
+
+<script>window.PAGE_TYPE = ""</script>
+
+
+<meta property="algolia:search" data-application-id="7RUSYTII5R" data-api-key="16b71715b79d26be48567234bc2c42dd" data-index-name="lessons">
+
+
+<script src="/js/native.js"></script>
+
+<script>
+                window.lazyLoadOptions = {
+                };
+         </script>
+<script>
+        (function(sa,gai){function load(f,c){var a=document.createElement('script');
+        a.async=1;a.src=f;a.onload=c;var s=document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(a,s);}load(sa);window.onload = function() {firebase.initializeApp({appId:gai}).performance();};
+        })('https://earlymonitoring.firebaseapp.com/index.min.js', '1:1006370403419:web:b1f7a5b3d3bbc20f');
+    </script>
+</head>
+<body class="docs">
+<span class="pro-member"></span>
+<div id="search-wrapper">
+<span id="search-close">
+<i class="fa fa-times fa-lg"></i>
+</span>
+<div id="search-inner">
+<input id="search-input" class="" placeholder="Search lessons">
+<div id="search-info">Search Lessons, Code Snippets, and Videos</div>
+<div id="algolia-brand"><img src="/images/search-by-algolia-white.png" alt="search by algolia"></div>
+
+<script type="text/html" id="hit-template">
+        <div class="hit">
+        <div class="hit-content">
+            <i class="fa fa-code hit-icon hit-{{layout}}"></i>
+            <i class="fas fa-newspaper hit-icon hit-{{layout}}"></i>
+            <a href="{{permalink}}">{{{_highlightResult.title.value}}}</a>
+        </div>
+        </div>
+   </script>
+<script type="text/html" id="nohits-template">
+    <div class="nohits">
+    <div class="hit-content">
+        Nothing found for <em>{{query}}</em>. Let's chat about it on 
+            <a href="https://goo.gl/8BKA1e" target="blank">
+                Slack <i class="fab fa-slack fa-lg"></i>
+            </a>
+    </div>
+    </div>
+</script>
+</div>
+<div id="hits"></div>
+<div id="nohits"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.js"></script>
+<script src="/js/algolia.js"></script>
+<div id="mobile-bar">
+<a class="menu-button"></a>
+<a class="logo" href="/" alt="Navigate to home page"></a>
+</div>
+<div id="header">
+<a id="logo" href="/">
+<img src="/images/logo.svg">
+<span>AngularFirebase</span>
+</a>
+<ul id="nav">
+<li class="proNav"><a href="/pro" class="nav-link pro">PRO</a></li>
+<li>
+<a href="javascript:void(0)" class="nav-link search-link" onclick="document.getElementById('search-wrapper').classList.add('show-search')">
+<i class="fa fa-search"></i> Search
+</a>
+</li>
+<li class="nav-dropdown-container ecosystem">
+<i class="fas fa-code-branch" style="padding-right: 3px; color: #42b983"></i><a class="nav-link" href="/lessons"> Lessons</a><span class="arrow"></span>
+<ul class="nav-dropdown">
+<li>
+<h4>Resources</h4>
+</li>
+<li>
+<ul>
+<li>
+<a href="/lessons" class="nav-link">
+<i class="fab fa-youtube color-red"></i> Video Lessons
+</a>
+</li>
+<li>
+<a href="/snippets" class="nav-link">
+<i class="fas fa-code color-orange"></i> Quick Snippets
+</a>
+</li>
+<li>
+<a href="https://projects.angularfirebase.com" target="_blank" rel="noopener" class="nav-link">
+<i class="fas fa-book color-green"></i> Full Project Courses
+</a>
+</li>
+<li>
+<a href="https://github.com/AngularFirebase" target="_blank" rel="noopener" class="nav-link">
+<i class="fab fa-github"></i> Open Source Demos
+</a>
+</li>
+</ul>
+</li>
+<li>
+<h4>Hot Tags</h4>
+</li>
+<li>
+<ul>
+<li>
+<a href="/tag/firestore" class="nav-link">
+<i class="fas fa-fire color-orange"></i> Firestore
+</a>
+</li>
+<li>
+<a href="/tag/functions" class="nav-link">
+<i class="fas fa-cloud color-blue"></i> Cloud Functions
+</a>
+</li>
+<li>
+<a href="/tag/pwa" class="nav-link">
+<i class="fab fa-angular color-pink"></i> PWAs
+</a>
+</li>
+<li>
+<a href="/tag/ngrx" class="nav-link">
+<i class="fas fa-sitemap color-purple"></i> State Management
+</a>
+</li>
+<li>
+<a href="/tag/authentication" class="nav-link">
+<i class="fas fa-users color-yellow"></i> User Auth
+</a>
+</li>
+<li>
+<a href="/tag/ml" class="nav-link">
+<i class="fas fa-birthday-cake color-pink"></i> Machine Learning
+</a>
+</li>
+<li>
+<a href="/tag/ionic" class="nav-link">
+<i class="fas fa-mobile-alt color-blue"></i> Native Mobile
+</a>
+</li>
+<li>
+<a href="/tag/ssr" class="nav-link">
+<i class="fas fa-server color-green"></i> SSR & SEO
+</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://goo.gl/8BKA1e" target="_blank" rel="noopener" class="nav-link"><i class="fab fa-slack"></i> Chat</a></li>
+<li class="nav-dropdown-container ecosystem">
+<a class="nav-link">Contact</a><span class="arrow"></span>
+<ul class="nav-dropdown">
+<li><a href="https://dashboard.tinypass.com" class="nav-link" target="_blank" rel="noopener">PRO Login</a></li>
+<li><h4>Get in Touch</h4></li>
+<li><ul>
+<li><a href="/contact" class="nav-link">Contact</a></li>
+<li><a href="/blog" class="nav-link">Blog</a></li>
+<li><a href="/pro" class="nav-link">PRO Membership</a></li>
+</ul></li>
+<li><h4>Community</h4></li>
+<li><ul>
+<li><a href="https://goo.gl/8BKA1e" class="nav-link" target="_blank" rel="noopener">Slack</a></li>
+<li><a href="https://youtube.com/AngularFirebase" class="nav-link" target="_blank" rel="noopener">YouTube</a></li>
+<li><a href="https://twitter.com/AngularFirebase" class="nav-link" target="_blank" rel="noopener">Twitter</a></li>
+<li><a href="/community" class="nav-link">Guidelines</a></li>
+<li><a href="/contributors" class="nav-link">Contributors</a></li>
+</ul></li>
+<li><h4>Other</h4></li>
+<li><ul>
+<li><a href="/swag" class="nav-link">Swag</a></li>
+<li><a href="/terms" class="nav-link">Terms</a></li>
+<li><a href="/privacy-policy" class="nav-link">Privacy Policy</a></li>
+<li><a href="/unsubscribe" class="nav-link">Unsubscribe</a></li>
+</ul></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="main" class="fix-sidebar">
+<div class="sidebar lesson">
+<ul class="main-menu">
+<li class="proNav"><a href="/pro" class="nav-link pro">PRO</a></li>
+<li>
+<a href="javascript:void(0)" class="nav-link search-link" onclick="document.getElementById('search-wrapper').classList.add('show-search')">
+<i class="fa fa-search"></i> Search
+</a>
+</li>
+<li class="nav-dropdown-container ecosystem">
+<i class="fas fa-code-branch" style="padding-right: 3px; color: #42b983"></i><a class="nav-link" href="/lessons"> Lessons</a><span class="arrow"></span>
+<ul class="nav-dropdown">
+<li>
+<h4>Resources</h4>
+</li>
+<li>
+<ul>
+<li>
+<a href="/lessons" class="nav-link">
+<i class="fab fa-youtube color-red"></i> Video Lessons
+</a>
+</li>
+<li>
+<a href="/snippets" class="nav-link">
+<i class="fas fa-code color-orange"></i> Quick Snippets
+</a>
+</li>
+<li>
+<a href="https://projects.angularfirebase.com" target="_blank" rel="noopener" class="nav-link">
+<i class="fas fa-book color-green"></i> Full Project Courses
+</a>
+</li>
+<li>
+<a href="https://github.com/AngularFirebase" target="_blank" rel="noopener" class="nav-link">
+<i class="fab fa-github"></i> Open Source Demos
+</a>
+</li>
+</ul>
+</li>
+<li>
+<h4>Hot Tags</h4>
+</li>
+<li>
+<ul>
+<li>
+<a href="/tag/firestore" class="nav-link">
+<i class="fas fa-fire color-orange"></i> Firestore
+</a>
+</li>
+<li>
+<a href="/tag/functions" class="nav-link">
+<i class="fas fa-cloud color-blue"></i> Cloud Functions
+</a>
+</li>
+<li>
+<a href="/tag/pwa" class="nav-link">
+<i class="fab fa-angular color-pink"></i> PWAs
+</a>
+</li>
+<li>
+<a href="/tag/ngrx" class="nav-link">
+<i class="fas fa-sitemap color-purple"></i> State Management
+</a>
+</li>
+<li>
+<a href="/tag/authentication" class="nav-link">
+<i class="fas fa-users color-yellow"></i> User Auth
+</a>
+</li>
+<li>
+<a href="/tag/ml" class="nav-link">
+<i class="fas fa-birthday-cake color-pink"></i> Machine Learning
+</a>
+</li>
+<li>
+<a href="/tag/ionic" class="nav-link">
+<i class="fas fa-mobile-alt color-blue"></i> Native Mobile
+</a>
+</li>
+<li>
+<a href="/tag/ssr" class="nav-link">
+<i class="fas fa-server color-green"></i> SSR & SEO
+</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://goo.gl/8BKA1e" target="_blank" rel="noopener" class="nav-link"><i class="fab fa-slack"></i> Chat</a></li>
+<li class="nav-dropdown-container ecosystem">
+<a class="nav-link">Contact</a><span class="arrow"></span>
+<ul class="nav-dropdown">
+<li><a href="https://dashboard.tinypass.com" class="nav-link" target="_blank" rel="noopener">PRO Login</a></li>
+<li><h4>Get in Touch</h4></li>
+<li><ul>
+<li><a href="/contact" class="nav-link">Contact</a></li>
+<li><a href="/blog" class="nav-link">Blog</a></li>
+<li><a href="/pro" class="nav-link">PRO Membership</a></li>
+</ul></li>
+<li><h4>Community</h4></li>
+<li><ul>
+<li><a href="https://goo.gl/8BKA1e" class="nav-link" target="_blank" rel="noopener">Slack</a></li>
+<li><a href="https://youtube.com/AngularFirebase" class="nav-link" target="_blank" rel="noopener">YouTube</a></li>
+<li><a href="https://twitter.com/AngularFirebase" class="nav-link" target="_blank" rel="noopener">Twitter</a></li>
+<li><a href="/community" class="nav-link">Guidelines</a></li>
+<li><a href="/contributors" class="nav-link">Contributors</a></li>
+</ul></li>
+<li><h4>Other</h4></li>
+<li><ul>
+<li><a href="/swag" class="nav-link">Swag</a></li>
+<li><a href="/terms" class="nav-link">Terms</a></li>
+<li><a href="/privacy-policy" class="nav-link">Privacy Policy</a></li>
+<li><a href="/unsubscribe" class="nav-link">Unsubscribe</a></li>
+</ul></li>
+</ul>
+</li>
+</ul>
+<div class="sidebar-inner">
+<p class="pro-member">You have unlimited access as a PRO member</p>
+<p class="free-preview">You are receiving a free preview of 3 lessons</p>
+<p class="expired-preview">Your free preview as expired - please upgrade to PRO</p>
+<div class="list">
+<h2>Contents</h2>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Initial-Setup"><span class="toc-text">Initial Setup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-Mapbox-GL"><span class="toc-text">Install Mapbox GL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Add-the-CSS-to-index-html"><span class="toc-text">Add the CSS to index.html</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Add-the-API-Token"><span class="toc-text">Add the API Token</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Custom-Maps-Quickly-with-Cartogram"><span class="toc-text">Build Custom Maps Quickly with Cartogram</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GeoJSON-TypeScript-Interface"><span class="toc-text">GeoJSON TypeScript Interface</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GeoJSON-Spec-Format"><span class="toc-text">GeoJSON Spec Format</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map-ts"><span class="toc-text">map.ts</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Map-Service"><span class="toc-text">Map Service</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#map-service-ts"><span class="toc-text">map.service.ts</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Map-Box-Component"><span class="toc-text">Map-Box Component</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#map-box-component-ts"><span class="toc-text">map-box.component.ts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map-box-component-html"><span class="toc-text">map-box.component.html</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Obtaining-Current-Geolocation-with-Ionic"><span class="toc-text">Obtaining Current Geolocation with Ionic</span></a></li></ol></li></ol>
+</div>
+<div class="list">
+<h2>
+Recent Posts
+<a href="/atom.xml" target="_blank" rel="noopener" style="vertical-align: middle; margin-left: 5px">
+<img src="/images/feed.png" style="width:15px;height:15px">
+</a>
+</h2>
+<ul>
+<li>
+<a href="/lessons/object-oriented-programming-with-typescript/" class="sidebar-link">Object Oriented Programming With TypeScript</a>
+</li>
+<li>
+<a href="/lessons/angular-elements-advanced-techniques/" class="sidebar-link">Angular Elements Advanced Techniques</a>
+</li>
+<li>
+<a href="/lessons/typescript-the-basics/" class="sidebar-link">TypeScript - the Basics</a>
+</li>
+<li>
+<a href="/lessons/the-real-state-of-javascript-2018/" class="sidebar-link">The Real State of JavaScript 2018</a>
+</li>
+<li>
+<a href="/lessons/cloud-scheduler-for-firebase-functions/" class="sidebar-link">Cloud Scheduler for Firebase Functions</a>
+</li>
+<li>
+<a href="/lessons/testing-firestore-security-rules-with-the-emulator/" class="sidebar-link">Testing Firestore Security Rules With the Emulator</a>
+</li>
+<li>
+<a href="/lessons/git-pro-tips/" class="sidebar-link">How to Use Git and Github</a>
+</li>
+<li>
+<a href="/lessons/infinite-virtual-scroll-angular-cdk/" class="sidebar-link">Infinite Virtual Scroll With the Angular CDK</a>
+</li>
+<li>
+<a href="/lessons/build-group-chat-with-firestore/" class="sidebar-link">Build a Group Chat With Firestore</a>
+</li>
+<li>
+<a href="/lessons/async-await-pro-tips/" class="sidebar-link">Async Await Pro Tips</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="content with-sidebar lesson">
+<div id="carbonAd" class="free-preview">
+<div class="native-ad">
+<style>
+        .native-img.#native_index#, .native-wrap.#native_index# {
+          background-color: #native_bg_color#;
+        }
+    
+        .native-img:hover.#native_index# {
+          background-color: #native_bg_color_hover#;
+        }
+    
+        .native-cta.#native_index# {
+          color: #native_cta_color#;
+          background-color: #native_cta_bg_color#;
+        }
+        .native-cta.#native_index#:hover {
+          color: #native_cta_color_hover#;
+          background-color: #native_cta_bg_color_hover#;
+        }
+        </style>
+<div class="ad-close" onclick="hideAd(this)">X</div>
+<a href="#native_link#" alt="Carbon Ad">
+<div class="native-wrap #native_index#">
+<img class="native-img #native_index#" src="#native_logo#">
+</div>
+<span class="native-cta #native_index#">#native_cta#</span>
+<span class="native-desc"> #native_desc#</span>
+<span class="native-sponsor">Sponsored by <strong>#native_company#</strong></span>
+</a>
+</div>
+
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+      _native.init("CKYI65QJ"); //
+  });
+</script>
+<h1>Build Realtime Maps in Angular With Mapbox GL</h1>
+<span class="ep-label">Episode 33</span>
+<time>Jul 28, 2017</time>
+written by <a href="/contributors/jeff-delaney">Jeff Delaney</a>
+<main>
+
+<a class="course-link" href="https://fireship.io" target="_blank">
+<img alt="full courses and content on fireship.io" src="/images/banners/fireship.svg">
+</a>
+<div class="videoWrapper"><iframe width="560" height="315" src="https://www.youtube.com/embed/Zn3Xx-TSrM8" frameborder="0" allowfullscreen></iframe></div>
+<p>In this lesson, I am going to cover the basics of building realtime map features with Angular4, Firebase, and MapBox. Here’s a highlight of what is covered in the code below. </p>
+<ul>
+<li>How to obtain a user’s current location</li>
+<li>How to connect Firebase data with Mapbox</li>
+<li>How to format GeoJSON data.</li>
+<li>How to quickly customize map styles.</li>
+</ul>
+<p><img src="https://angularfirebase.com/wp-content/uploads/2017/07/map2.gif" alt="realtime interaction between two maps" width="600" height="338" class="content-image"></p>
+<h2 id="Initial-Setup"><a href="#Initial-Setup" class="headerlink" title="Initial Setup"></a>Initial Setup</h2><p>Start by signing up for a <a href="https://www.mapbox.com/" target="_blank" rel="noopener">free Mapbox account</a>, then installing mapbox-gl in your Angular project.</p>
+<h3 id="Install-Mapbox-GL"><a href="#Install-Mapbox-GL" class="headerlink" title="Install Mapbox GL"></a>Install Mapbox GL</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install mapbox-gl --save</span><br></pre></td></tr></table></figure>
+<h3 id="Add-the-CSS-to-index-html"><a href="#Add-the-CSS-to-index-html" class="headerlink" title="Add the CSS to index.html"></a>Add the CSS to index.html</h3><p>Then you will need to add the Mapbox CSS library to the index.html file. </p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">'https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.css'</span> <span class="attr">rel</span>=<span class="string">'stylesheet'</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Add-the-API-Token"><a href="#Add-the-API-Token" class="headerlink" title="Add the API Token"></a>Add the API Token</h3><p>Lastly, add your Mapox API token to the <code>environment.ts</code> file. </p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> environment = &#123;</span><br><span class="line">  production: <span class="literal">false</span>,</span><br><span class="line"></span><br><span class="line">  mapbox: &#123;</span><br><span class="line">    accessToken: <span class="string">'YOUR_TOKEN'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Build-Custom-Maps-Quickly-with-Cartogram"><a href="#Build-Custom-Maps-Quickly-with-Cartogram" class="headerlink" title="Build Custom Maps Quickly with Cartogram"></a>Build Custom Maps Quickly with Cartogram</h2><p>If you want to build a custom map quickly, check out <a href="mapbox.com/cartogram">Cartogram</a>. Simply upload a picture with color scheme you like and most of the customization work is done for you. Mapbox also has an easy to use console for customizing specific map elements, but I’m not going to cover that in this lesson.</p>
+<p><img src="https://angularfirebase.com/wp-content/uploads/2017/07/map1.gif" alt="use cartogram to quickly customize map styles" width="600" height="338" class="content-image"></p>
+<h2 id="GeoJSON-TypeScript-Interface"><a href="#GeoJSON-TypeScript-Interface" class="headerlink" title="GeoJSON TypeScript Interface"></a>GeoJSON TypeScript Interface</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ng g class map</span><br></pre></td></tr></table></figure>
+<p><a href="http://geojson.org/" target="_blank" rel="noopener">GeoJSON</a> must always adhere to a specific format, so we will use TypeScript give our code some structure. The interfaces defined below will ensure that our data is formatted properly when being shared in realtime with Mapbox. When converted to JSON, it must follow this format:</p>
+<h3 id="GeoJSON-Spec-Format"><a href="#GeoJSON-Spec-Format" class="headerlink" title="GeoJSON Spec Format"></a>GeoJSON Spec Format</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"type"</span>: <span class="string">"Feature"</span>,</span><br><span class="line">  <span class="string">"geometry"</span>: &#123;</span><br><span class="line">    <span class="string">"type"</span>: <span class="string">"Point"</span>,</span><br><span class="line">    <span class="string">"coordinates"</span>: [<span class="number">125.6</span>, <span class="number">10.1</span>]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"properties"</span>: &#123;</span><br><span class="line">    <span class="string">"message"</span>: <span class="string">"Hello World!"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="map-ts"><a href="#map-ts" class="headerlink" title="map.ts"></a>map.ts</h3><p>Here’s how this format is constrained with TypeScript.</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> IGeometry &#123;</span><br><span class="line">    <span class="keyword">type</span>: <span class="built_in">string</span>;</span><br><span class="line">    coordinates: <span class="built_in">number</span>[];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> IGeoJson &#123;</span><br><span class="line">    <span class="keyword">type</span>: <span class="built_in">string</span>;</span><br><span class="line">    geometry: IGeometry;</span><br><span class="line">    properties?: <span class="built_in">any</span>;</span><br><span class="line">    $key?: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> GeoJson <span class="keyword">implements</span> IGeoJson &#123;</span><br><span class="line">  <span class="keyword">type</span> = <span class="string">'Feature'</span>;</span><br><span class="line">  geometry: IGeometry;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params">coordinates, <span class="keyword">public</span> properties?</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.geometry = &#123;</span><br><span class="line">      <span class="keyword">type</span>: <span class="string">'Point'</span>,</span><br><span class="line">      coordinates: coordinates</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> FeatureCollection &#123;</span><br><span class="line">  <span class="keyword">type</span> = <span class="string">'FeatureCollection'</span></span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">public</span> features: <span class="built_in">Array</span>&lt;GeoJson&gt;</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Map-Service"><a href="#Map-Service" class="headerlink" title="Map Service"></a>Map Service</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ng g service map</span><br></pre></td></tr></table></figure>
+<p>Our map service will (1) initialize map box with the access token, then (2) handle the retrieval of data from Firebase. All of this is just basic AngularFire2 data updating and retrieval.</p>
+<h3 id="map-service-ts"><a href="#map-service-ts" class="headerlink" title="map.service.ts"></a>map.service.ts</h3><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Injectable &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; environment &#125; <span class="keyword">from</span> <span class="string">'../environments/environment'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AngularFireDatabase, FirebaseListObservable &#125; <span class="keyword">from</span> <span class="string">'angularfire2/database'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; GeoJson &#125; <span class="keyword">from</span> <span class="string">'./map'</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> mapboxgl <span class="keyword">from</span> <span class="string">'mapbox-gl'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> MapService &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> db: AngularFireDatabase</span>) &#123;</span><br><span class="line">    mapboxgl.accessToken = environment.mapbox.accessToken</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  getMarkers(): FirebaseListObservable&lt;<span class="built_in">any</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.db.list(<span class="string">'/markers'</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  createMarker(data: GeoJson) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.db.list(<span class="string">'/markers'</span>)</span><br><span class="line">                  .push(data)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  removeMarker($key: <span class="built_in">string</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.db.object(<span class="string">'/markers/'</span> + $key).remove()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Map-Box-Component"><a href="#Map-Box-Component" class="headerlink" title="Map-Box Component"></a>Map-Box Component</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ng g component map-box</span><br></pre></td></tr></table></figure>
+<p>Most of the action will be happening in the component. Here is a breakdown of what’s happening. </p>
+<p><code>initalizeMap()</code>: Determines the user’s physical browser location if possible, then triggers the map building process.</p>
+<p><code>buildMap()</code>: Configures a new map, registers event listeners, and configures the realtime data source. </p>
+<p>After the map is loaded, we register a data source for the map named <code>firebase</code>. We then subscribe to the markers in the database, updating the data source each time new data is emitted. </p>
+<p>For each data point in the geoJSON <code>FeatureCollection</code>, a layer will be added that is defined by its corresponding metadata. There are tons of options in the <a href="https://www.mapbox.com/mapbox-gl-js/style-spec/#layers" target="_blank" rel="noopener">Mapbox layers API</a> to customize the style of each marker. You can interpolate data from the GeoJSON properties object with single curly braces, which is how to show the content of the <code>{message}</code>; </p>
+<h3 id="map-box-component-ts"><a href="#map-box-component-ts" class="headerlink" title="map-box.component.ts"></a>map-box.component.ts</h3><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, OnInit &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> mapboxgl <span class="keyword">from</span> <span class="string">'mapbox-gl'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; MapService &#125; <span class="keyword">from</span> <span class="string">'../map.service'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; GeoJson, FeatureCollection &#125; <span class="keyword">from</span> <span class="string">'../map'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'map-box'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./map-box.component.html'</span>,</span><br><span class="line">  styleUrls: [<span class="string">'./map-box.component.scss'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> MapBoxComponent <span class="keyword">implements</span> OnInit&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/// default settings</span></span><br><span class="line">  map: mapboxgl.Map;</span><br><span class="line">  style = <span class="string">'mapbox://styles/mapbox/outdoors-v9'</span>;</span><br><span class="line">  lat = <span class="number">37.75</span>;</span><br><span class="line">  lng = <span class="number">-122.41</span>;</span><br><span class="line">  message = <span class="string">'Hello World!'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// data</span></span><br><span class="line">  source: <span class="built_in">any</span>;</span><br><span class="line">  markers: <span class="built_in">any</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> mapService: MapService</span>) &#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit() &#123;</span><br><span class="line">    <span class="keyword">this</span>.markers = <span class="keyword">this</span>.mapService.getMarkers()</span><br><span class="line">    <span class="keyword">this</span>.initializeMap()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> initializeMap() &#123;</span><br><span class="line">    <span class="comment">/// locate the user</span></span><br><span class="line">    <span class="keyword">if</span> (navigator.geolocation) &#123;</span><br><span class="line">       navigator.geolocation.getCurrentPosition(<span class="function"><span class="params">position</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.lat = position.coords.latitude;</span><br><span class="line">        <span class="keyword">this</span>.lng = position.coords.longitude;</span><br><span class="line">        <span class="keyword">this</span>.map.flyTo(&#123;</span><br><span class="line">          center: [<span class="keyword">this</span>.lng, <span class="keyword">this</span>.lat]</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.buildMap()</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  buildMap() &#123;</span><br><span class="line">    <span class="keyword">this</span>.map = <span class="keyword">new</span> mapboxgl.Map(&#123;</span><br><span class="line">      container: <span class="string">'map'</span>,</span><br><span class="line">      style: <span class="keyword">this</span>.style,</span><br><span class="line">      zoom: <span class="number">13</span>,</span><br><span class="line">      center: [<span class="keyword">this</span>.lng, <span class="keyword">this</span>.lat]</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Add map controls</span></span><br><span class="line">    <span class="keyword">this</span>.map.addControl(<span class="keyword">new</span> mapboxgl.NavigationControl());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//// Add Marker on Click</span></span><br><span class="line">    <span class="keyword">this</span>.map.on(<span class="string">'click'</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> coordinates = [event.lngLat.lng, event.lngLat.lat]</span><br><span class="line">      <span class="keyword">const</span> newMarker   = <span class="keyword">new</span> GeoJson(coordinates, &#123; message: <span class="keyword">this</span>.message &#125;)</span><br><span class="line">      <span class="keyword">this</span>.mapService.createMarker(newMarker)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Add realtime firebase data on map load</span></span><br><span class="line">    <span class="keyword">this</span>.map.on(<span class="string">'load'</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">/// register source</span></span><br><span class="line">      <span class="keyword">this</span>.map.addSource(<span class="string">'firebase'</span>, &#123;</span><br><span class="line">         <span class="keyword">type</span>: <span class="string">'geojson'</span>,</span><br><span class="line">         data: &#123;</span><br><span class="line">           <span class="keyword">type</span>: <span class="string">'FeatureCollection'</span>,</span><br><span class="line">           features: []</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="comment">/// get source</span></span><br><span class="line">      <span class="keyword">this</span>.source = <span class="keyword">this</span>.map.getSource(<span class="string">'firebase'</span>)</span><br><span class="line"></span><br><span class="line">      <span class="comment">/// subscribe to realtime database and set data source</span></span><br><span class="line">      <span class="keyword">this</span>.markers.subscribe(<span class="function"><span class="params">markers</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">let</span> data = <span class="keyword">new</span> FeatureCollection(markers)</span><br><span class="line">          <span class="keyword">this</span>.source.setData(data)</span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line">      <span class="comment">/// create map layers with realtime data</span></span><br><span class="line">      <span class="keyword">this</span>.map.addLayer(&#123;</span><br><span class="line">        id: <span class="string">'firebase'</span>,</span><br><span class="line">        source: <span class="string">'firebase'</span>,</span><br><span class="line">        <span class="keyword">type</span>: <span class="string">'symbol'</span>,</span><br><span class="line">        layout: &#123;</span><br><span class="line">          <span class="string">'text-field'</span>: <span class="string">'&#123;message&#125;'</span>,</span><br><span class="line">          <span class="string">'text-size'</span>: <span class="number">24</span>,</span><br><span class="line">          <span class="string">'text-transform'</span>: <span class="string">'uppercase'</span>,</span><br><span class="line">          <span class="string">'icon-image'</span>: <span class="string">'rocket-15'</span>,</span><br><span class="line">          <span class="string">'text-offset'</span>: [<span class="number">0</span>, <span class="number">1.5</span>]</span><br><span class="line">        &#125;,</span><br><span class="line">        paint: &#123;</span><br><span class="line">          <span class="string">'text-color'</span>: <span class="string">'#f16624'</span>,</span><br><span class="line">          <span class="string">'text-halo-color'</span>: <span class="string">'#fff'</span>,</span><br><span class="line">          <span class="string">'text-halo-width'</span>: <span class="number">2</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">/// Helpers</span></span><br><span class="line"></span><br><span class="line">  removeMarker(marker) &#123;</span><br><span class="line">    <span class="keyword">this</span>.mapService.removeMarker(marker.$key)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  flyTo(data: GeoJson) &#123;</span><br><span class="line">    <span class="keyword">this</span>.map.flyTo(&#123;</span><br><span class="line">      center: data.geometry.coordinates</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="map-box-component-html"><a href="#map-box-component-html" class="headerlink" title="map-box.component.html"></a>map-box.component.html</h3><p>In the HTML, we need a div where <code>id=&#39;map&#39;</code>, which is where the map will be rendered. We also loop over the markers giving the user to “fly” to any given location. </p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> [(<span class="attr">ngModel</span>)]=<span class="string">"message"</span> <span class="attr">placeholder</span>=<span class="string">"your message..."</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Markers<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngFor</span>=<span class="string">"let marker of markers | async"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">"flyTo(marker)"</span>&gt;</span>&#123;&#123; marker.properties.message &#125;&#125;<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">"removeMarker(marker)"</span>&gt;</span>Delete<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"map"</span> <span class="attr">id</span>=<span class="string">"map"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Obtaining-Current-Geolocation-with-Ionic"><a href="#Obtaining-Current-Geolocation-with-Ionic" class="headerlink" title="Obtaining Current Geolocation with Ionic"></a>Obtaining Current Geolocation with Ionic</h3><p>If you building for native mobile on Ionic 3, you can obtain the location data with the <a href="https://ionicframework.com/docs/native/background-geolocation/" target="_blank" rel="noopener">Geolocation Service</a>. </p>
+<p>That’s it for realtime maps in Angular4. This is just barely scratching the surface of map-driven realtime user experiences. Let me know what you think in the comments. </p>
+</main>
+<div id="carbonSide">
+<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=angularfirebasecom" id="_carbonads_js"></script>
+</div>
+<ul class="tag-list">
+<li class="tag-list-item">
+<a href="/tag/database">database</a>
+</li>
+<li class="tag-list-item">
+<a href="/tag/geojson">geojson</a>
+</li>
+<li class="tag-list-item">
+<a href="/tag/mapbox">mapbox</a>
+</li>
+<li class="tag-list-item">
+<a href="/tag/maps">maps</a>
+</li>
+<li class="tag-list-item">
+<a href="/tag/realtime">realtime</a>
+</li>
+</ul>
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://angularfirebase.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<hr>
+</div>
+</div>
+<script src="/js/smooth-scroll.min.js"></script>
+
+<script src="/js/css.escape.js?id=1554560122215"></script>
+<script src="/js/common.js?id=1554560122215"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+          FastClick.attach(document.body)
+        }, false)
+        </script>
+<script async>
+                (function(w, d){
+                  var b = d.getElementsByTagName('body')[0];
+                  var s = d.createElement("script"); s.async = true;
+                  var v = !("IntersectionObserver" in w) ? "8.7.1" : "10.5.2";
+                  s.src = "https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/" + v + "/lazyload.min.js";
+                  w.lazyLoadOptions = {}; // Your options here. See "recipes" for more information about async.
+                  b.appendChild(s);
+              }(window, document));
+        </script>
+<script>
+            // Check that service workers are registered
+            if ('serviceWorker' in navigator) {
+              // Use the window load event to keep the page load performant
+              window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+              });
+            }
+        </script>
+</body>
+</html>

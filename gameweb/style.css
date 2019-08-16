@@ -1,0 +1,46 @@
+@font-face{
+    src: url(fonts/p5hatty.ttf);
+    font-family:p5;
+}
+html{
+    background-color: rgb(66, 66, 66);
+}
+ul{
+    
+    list-style-type: none;
+    margin: 0px;
+    padding: 9px;
+    overflow: hidden;
+    background-color: rgb(245, 61, 61);
+   
+}
+
+li{
+    float: left;
+}
+li a {
+    text-decoration: none;
+    color:black;
+    display:block;
+    text-align:center;
+    padding: 14px 16px;
+    float:right;    
+}
+ img{
+    width: 460px;
+    height:auto;
+    position: fixed;
+    bottom: 328px;
+    right: -111px;
+}
+iframe{
+    display:block;
+    margin: 25px auto;
+    
+}
+p{
+    font-family: p5;
+    color:whitesmoke;
+    text-align:center;
+    font-size: 50px;
+}
